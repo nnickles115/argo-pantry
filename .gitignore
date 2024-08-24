@@ -1,0 +1,18 @@
+# Ignore bin, obj, and .vs directories in all subfolders
+**/bin/
+**/obj/
+**/.vs/
+
+# Other common ignores
+*.log
+*.tmp
+*.swp
+*.bak
+*.userosscache
+*.suo
+*.user
+*.userosscache
+*.rsuser
+
+# Ignore Visual Studio Code workspace
+.vscode/
