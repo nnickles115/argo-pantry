@@ -1,0 +1,193 @@
+﻿<Page
+    x:Class="ArgoPantry.WPF.Views.OrdersPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:ArgoPantry.WPF.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:ArgoPantry.WPF.Helpers"
+    xmlns:local="clr-namespace:ArgoPantry.WPF.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:ArgoPantry.WPF.ViewModels"
+    x:Name="Root"
+    Title="OrdersPage"
+    d:DataContext="{d:DesignInstance vm:OrderViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{ui:ThemeResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+    Loaded="OnLoaded"
+    ScrollViewer.CanContentScroll="True"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="RoundedBorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="0.4" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Background" Value="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        </Style>
+        <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <helpers:ScaleConverter x:Key="ScaleConverter" />
+        <helpers:FontSizeConverter x:Key="FontSizeConverter" />
+    </Page.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  //  Header Area  //  -->
+        <ui:CardControl
+            x:Name="Header"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Margin="8"
+            Padding="25"
+            HorizontalContentAlignment="Left"
+            Focusable="False"
+            IsEnabled="False" />
+
+        <StackPanel Margin="8" Orientation="Horizontal">
+            <ui:AutoSuggestBox
+                x:Name="StudentId_SearchBox"
+                MinWidth="200"
+                MinHeight="37"
+                Margin="8,0,0,0"
+                FontSize="14"
+                OriginalItemsSource="{Binding AutoSuggestBoxSuggestions, Mode=OneWay}"
+                PlaceholderText="Search by Student ID..."
+                SuggestionChosen="SearchBox_SuggestionChosen"
+                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+            <ui:Button
+                MinHeight="37"
+                Margin="8,0,8,0"
+                Command="{Binding AddNewStudentCommand}"
+                Icon="{ui:SymbolIcon Symbol=PersonAdd24}"
+                ToolTip="Add a new Student" />
+
+            <StackPanel VerticalAlignment="Center">
+                <ui:TextBlock FontSize="14" Text="Selected Student:" />
+                <ui:TextBlock FontSize="14" Text="{Binding FullName}" />
+            </StackPanel>
+        </StackPanel>
+
+        <!--  Content Area  -->
+        <Border
+            Grid.Row="1"
+            Margin="8"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Style="{StaticResource ResourceKey=RoundedBorderStyle}">
+            <ui:ListView
+                Grid.Row="1"
+                Height="{Binding ListViewHeight}"
+                d:ItemsSource="{d:SampleData ItemCount=10}"
+                IsEnabled="True"
+                ItemsSource="{Binding ScannedItems, Mode=OneWay}"
+                PreviewMouseDown="ListView_PreviewMouseDown"
+                SelectionChanged="ListView_SelectionChanged"
+                SelectionMode="Multiple">
+                <ui:ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Padding="8,8,0,8"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Text="{Binding ItemName}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="0,0,8,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Foreground="Gray"
+                                Text="Barcode:" />
+                            <TextBlock
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Foreground="Gray"
+                                Text="{Binding Barcode}" />
+                        </Grid>
+                    </DataTemplate>
+                </ui:ListView.ItemTemplate>
+            </ui:ListView>
+        </Border>
+
+        <!--  Footer Area  -->
+        <ui:CardControl
+            x:Name="Footer"
+            Grid.Row="2"
+            Margin="8"
+            Padding="25"
+            Focusable="False"
+            IsEnabled="False" />
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock
+                    Margin="16,0,8,0"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="Scan a barcode:" />
+                <ui:TextBox
+                    x:Name="Barcode_TextBox"
+                    Height="37"
+                    MinWidth="150"
+                    Margin="0,10"
+                    IsEnabled="{Binding IsEditModeEnabled, Converter={StaticResource InverseBooleanConverter}}"
+                    PlaceholderText="Barcode"
+                    Text="{Binding ScannedBarcode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="1"
+                Margin="0,0,16,0"
+                Orientation="Horizontal">
+                <ui:Button
+                    Height="37"
+                    MinWidth="110"
+                    HorizontalAlignment="Stretch"
+                    d:Content="Edit Cart"
+                    Command="{Binding ToggleEditModeCommand}"
+                    Content="{Binding EditCartButtonText}"
+                    Icon="{ui:SymbolIcon Symbol=Edit24}" />
+                <ui:Button
+                    Height="37"
+                    MinWidth="110"
+                    Margin="8,0"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ClearCartCommand}"
+                    Content="Clear Cart"
+                    Icon="{ui:SymbolIcon Symbol=Delete24}" />
+                <ui:Button
+                    Height="37"
+                    MinWidth="110"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ConfirmOrderCommand}"
+                    Content="Checkout"
+                    Icon="{ui:SymbolIcon Symbol=Cart24}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

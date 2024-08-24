@@ -1,0 +1,125 @@
+﻿<ui:ContentDialog
+    x:Class="ArgoPantry.Views.StudentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:ArgoPantry.WPF.Helpers"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:ArgoPantry.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:ArgoPantry.WPF.ViewModels"
+    d:DataContext="{d:DesignInstance vm:StudentForm,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="300"
+    d:DesignWidth="350"
+    ui:Design.Background="{ui:ThemeResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+    CloseButtonText="Cancel"
+    Closing="ContentDialog_Closing"
+    DialogMaxHeight="300"
+    DialogMaxWidth="350"
+    IsSecondaryButtonEnabled="False"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <ui:ContentDialog.Resources>
+        <Style BasedOn="{StaticResource {x:Type ui:ContentDialog}}" TargetType="{x:Type local:StudentDialog}" />
+        <helpers:ValidationErrorConverter x:Key="ValidationErrorConverter" />
+        <helpers:ValidationErrorMultiConverter x:Key="ValidationErrorMultiConverter" />
+        <helpers:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+        <helpers:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </ui:ContentDialog.Resources>
+
+    <!--  Body  -->
+    <Grid Margin="0,-36,-6,-36" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  First Name  -->
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <ui:TextBlock
+                Margin="0,0,0,12"
+                HorizontalAlignment="Left"
+                Text="First Name" />
+            <ui:TextBox
+                x:Name="FirstName_TextBox"
+                Width="280"
+                Margin="0,0,0,16"
+                PlaceholderText="Text"
+                Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:TextBlock
+                Margin="0,-4,0,16"
+                HorizontalAlignment="Left"
+                Foreground="Red"
+                Text="{Binding (Validation.Errors), ElementName=FirstName_TextBox, Converter={StaticResource ValidationErrorConverter}}"
+                Visibility="{Binding (Validation.Errors), ElementName=FirstName_TextBox, Converter={StaticResource StringToVisibilityConverter}}" />
+        </StackPanel>
+
+        <!--  Last Name  -->
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <ui:TextBlock
+                Margin="0,0,0,12"
+                HorizontalAlignment="Left"
+                Text="Last Name" />
+            <ui:TextBox
+                x:Name="LastName_TextBox"
+                Width="280"
+                Margin="0,0,0,16"
+                PlaceholderText="Text"
+                Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:TextBlock
+                Margin="0,-4,0,16"
+                HorizontalAlignment="Left"
+                Foreground="Red"
+                Text="{Binding (Validation.Errors), ElementName=LastName_TextBox, Converter={StaticResource ValidationErrorConverter}}"
+                Visibility="{Binding (Validation.Errors), ElementName=LastName_TextBox, Converter={StaticResource StringToVisibilityConverter}}" />
+        </StackPanel>
+
+        <!--  Student ID  -->
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <ui:TextBlock
+                Margin="0,0,0,12"
+                HorizontalAlignment="Left"
+                Text="Student ID" />
+            <ui:TextBox
+                x:Name="StudentId_TextBox"
+                Width="280"
+                Margin="0,0,0,16"
+                DataObject.Pasting="InputBox_Pasting"
+                IsEnabled="{Binding IsUpdateMode, Converter={StaticResource InverseBooleanConverter}}"
+                PlaceholderText="#"
+                PreviewTextInput="InputBox_PreviewTextInput"
+                Text="{Binding StudentId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+            <ui:TextBlock
+                Margin="0,-4,0,0"
+                HorizontalAlignment="Left"
+                Foreground="Red"
+                Validation.ErrorTemplate="{x:Null}"
+                Visibility="{Binding (Validation.Errors), ElementName=StudentId_TextBox, Converter={StaticResource StringToVisibilityConverter}}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource ValidationErrorMultiConverter}">
+                        <Binding ElementName="StudentId_TextBox" Path="(Validation.Errors)" />
+                        <Binding Path="StudentId" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </ui:TextBlock>
+        </StackPanel>
+    </Grid>
+</ui:ContentDialog>

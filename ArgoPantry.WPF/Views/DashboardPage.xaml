@@ -1,0 +1,161 @@
+﻿<Page
+    x:Class="ArgoPantry.WPF.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:ArgoPantry.WPF.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ArgoPantry.WPF.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:ArgoPantry.WPF.ViewModels"
+    Title="DashboardPage"
+    d:DataContext="{d:DesignInstance vm:DashboardViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <controls:DigitalClock x:Key="DigitalClock" />
+    </Page.Resources>
+
+    <Grid Margin="0,24,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="4">
+            <controls:DigitalClock VerticalAlignment="Center" FontSize="20" />
+
+            <ui:TextBlock
+                FontTypography="Title"
+                Text="Welcome!"
+                TextWrapping="WrapWithOverflow" />
+        </StackPanel>
+
+        <ui:CardAction
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="4,0,4,0"
+            Padding="0"
+            VerticalAlignment="Stretch"
+            Command="{Binding CardClickCommand, Mode=OneWay}"
+            CommandParameter="Orders"
+            IsChevronVisible="False">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ui:SymbolIcon
+                    Width="45"
+                    Margin="8,0,0,0"
+                    Symbol="ShoppingBag24" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="24"
+                    VerticalAlignment="Center">
+                    <ui:TextBlock
+                        Margin="0"
+                        FontTypography="BodyStrong"
+                        Text="New Order"
+                        TextWrapping="WrapWithOverflow" />
+                    <ui:TextBlock
+                        Appearance="Secondary"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="Start a new order for a student"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+            </Grid>
+        </ui:CardAction>
+
+        <ui:CardAction
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="4,0,4,0"
+            Padding="0"
+            VerticalAlignment="Stretch"
+            Command="{Binding CardClickCommand, Mode=OneWay}"
+            CommandParameter="Students"
+            IsChevronVisible="False">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ui:SymbolIcon
+                    Width="45"
+                    Margin="8,0,0,0"
+                    Symbol="People48" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="24"
+                    VerticalAlignment="Center">
+                    <ui:TextBlock
+                        Margin="0"
+                        FontTypography="BodyStrong"
+                        Text="Manage Students"
+                        TextWrapping="WrapWithOverflow" />
+                    <ui:TextBlock
+                        Appearance="Secondary"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="Add/Update/Delete Students from the Database"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+            </Grid>
+        </ui:CardAction>
+
+        <ui:CardAction
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="4,0,4,0"
+            Padding="0"
+            VerticalAlignment="Stretch"
+            Command="{Binding CardClickCommand, Mode=OneWay}"
+            CommandParameter="Items"
+            IsChevronVisible="False">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ui:SymbolIcon
+                    Width="45"
+                    Margin="8,0,0,0"
+                    Symbol="FoodApple24" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="24"
+                    VerticalAlignment="Center">
+                    <ui:TextBlock
+                        Margin="0"
+                        FontTypography="BodyStrong"
+                        Text="Manage Inventory"
+                        TextWrapping="WrapWithOverflow" />
+                    <ui:TextBlock
+                        Appearance="Secondary"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="Add/Update/Delete Items from the Database"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+            </Grid>
+        </ui:CardAction>
+    </Grid>
+</Page>

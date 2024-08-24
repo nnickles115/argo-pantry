@@ -1,0 +1,11 @@
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\bin\Debug\net8.0\ArgoPantry.Domain.deps.json
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\bin\Debug\net8.0\ArgoPantry.Domain.dll
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\bin\Debug\net8.0\ArgoPantry.Domain.pdb
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ArgoPantry.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ArgoPantry.Domain.AssemblyInfoInputs.cache
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ArgoPantry.Domain.AssemblyInfo.cs
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ArgoPantry.Domain.csproj.CoreCompileInputs.cache
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ArgoPantry.Domain.dll
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\refint\ArgoPantry.Domain.dll
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ArgoPantry.Domain.pdb
+C:\Users\hyper\Desktop\NEWEST\ArgoPantry.Domain\obj\Debug\net8.0\ref\ArgoPantry.Domain.dll
