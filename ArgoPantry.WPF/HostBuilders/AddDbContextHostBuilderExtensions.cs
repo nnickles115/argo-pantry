@@ -3,22 +3,13 @@
 public static class AddDbContextHostBuilderExtensions {
     public static IHostBuilder AddDbContext(this IHostBuilder host) {
         host.ConfigureServices((context, services) => {
-            // Get items defined in appsettings.json
-            //var folderPath = context.Configuration["Database:FolderPath"];
-            var fileName = context.Configuration["Database:FileName"];
-            string sqliteConnection = context.Configuration.GetConnectionString("SQLiteConnection")!;
-
-            // Check if the folder path is null
-            if(fileName == null) {
-                throw new ArgumentNullException(nameof(fileName));
-            }
-            
-            // Combine the folder path and file name
+            // Hardcoded file name and folder path
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var fileName = "ArgoPantry.db";
             var dbPath = Path.Combine(documentsPath, fileName);
 
-            // Define the connection string
-            string connectionString = $"{sqliteConnection}{dbPath}";
+            // Connection string
+            string connectionString = $"Data Source={dbPath}";
 
             // Configure the DbContext with the connection string
             void configureDbContext(DbContextOptionsBuilder o) => o.UseSqlite(connectionString);
